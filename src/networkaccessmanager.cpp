@@ -98,12 +98,29 @@ void NetworkAccessManager::setPassword(const QString &password)
     m_password = password;
 }
 
+void NetworkAccessManager::setCustomHeaders(const QVariantMap &headers)
+{
+    m_customHeaders = headers;
+}
+
+QVariantMap NetworkAccessManager::customHeaders() const
+{
+    return m_customHeaders;
+}
+
 // protected:
 QNetworkReply *NetworkAccessManager::createRequest(Operation op, const QNetworkRequest & req, QIODevice * outgoingData)
 {
     // Get the URL string before calling the superclass. Seems to work around
     // segfaults in Qt 4.8: https://gist.github.com/1430393
     QByteArray url = req.url().toEncoded();
+
+    // set custom HTTP headers
+    QVariantMap::const_iterator i = m_customHeaders.begin();
+    while (i != m_customHeaders.end()) {
+        req.setRawHeader(i.key().toAscii(), i.value().toByteArray());
+        ++i;
+    }
 
     // Pass duty to the superclass - Nothing special to do here (yet?)
     QNetworkReply *reply = QNetworkAccessManager::createRequest(op, req, outgoingData);
