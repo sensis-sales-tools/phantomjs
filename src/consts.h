@@ -36,7 +36,7 @@
 #define PHANTOMJS_VERSION_MAJOR     1
 #define PHANTOMJS_VERSION_MINOR     4
 #define PHANTOMJS_VERSION_PATCH     1
-#define PHANTOMJS_VERSION_STRING    "1.4.1"
+#define PHANTOMJS_VERSION_STRING    "1.4.1-http-headers"
 
 #define COFFEE_SCRIPT_EXTENSION     ".coffee"
 
